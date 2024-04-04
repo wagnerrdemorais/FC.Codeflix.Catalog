@@ -30,16 +30,47 @@ namespace FC.Codeflix.Catalog.Domain.Entity
             Validate();
         }
 
-        public void Validate()
+        public void Activate()
+        {
+            this.IsActive = true;
+            Validate();
+        }
+
+        public void Deactivate()
+        {
+            this.IsActive = false;
+            Validate();
+        }
+
+        public void Update(string name, string? description = null) { 
+            this.Name = name;
+            this.Description = description ?? Description;
+            Validate();
+        }
+
+        private void Validate()
         {
             if (String.IsNullOrWhiteSpace(Name))
             {
                 throw new EntityValidationExceprion($"{nameof(Name)} should not be null or empty");
             }
+            if (Name.Length < 3)
+            {
+                throw new EntityValidationExceprion($"{nameof(Name)} should be at least 3 characters long");
+            }
+            if (Name.Length > 255)
+            {
+                throw new EntityValidationExceprion($"{nameof(Name)} size should be less or equal to 255 chars");
+            }
             if (String.IsNullOrWhiteSpace(Description))
             {
                 throw new EntityValidationExceprion($"{nameof(Description)} should not be null");
             }
+            if (Description.Length > 10000)
+            {
+                throw new EntityValidationExceprion($"{nameof(Description)} size should be less or equal to 10_000 chars");
+            }
+
         }
     }
 
