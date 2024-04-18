@@ -93,8 +93,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
 
         [Theory(DisplayName = "ExceptionWhenInstantiateWithNameIsLessThan3Char")]
         [Trait("Domain", "Category - Aggregates")]
-        [InlineData("ab")]
-        [InlineData("a")]
+        [MemberData(nameof(GetNamesWithLessThan3Chars), parameters: 10)]
         public void ExceptionWhenInstantiateWithNameIsLessThan3Char(string invalidName)
         {
             Action action =
@@ -225,7 +224,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
 
             var category = _categoryTestFixture.GetValidCategory();
 
-            var invalidName = String.Join(null, Enumerable.Range(1, 256).Select(_ => "a").ToArray());
+            var invalidName = _categoryTestFixture.Faker.Lorem.Letter(256);
 
             Action action = () => category.Update(invalidName);
 
@@ -239,12 +238,27 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
         {
             var category = new DomainEntity.Category("Name", "description");
 
-            var invalidDescription = String.Join(null, Enumerable.Range(1, 10001).Select(_ => "a").ToArray());
+            var invalidDescription = _categoryTestFixture.Faker.Commerce.ProductDescription();
+
+            while(invalidDescription.Length <= 10000)
+                invalidDescription = $"{invalidDescription} {_categoryTestFixture.Faker.Commerce.ProductDescription()}";
 
             Action action = () => category.Update("Name", invalidDescription);
 
             var exception = Assert.Throws<EntityValidationExceprion>(action);
             Assert.Equal("Description size should be less or equal to 10_000 chars", exception.Message);
+        }
+
+        public static IEnumerable<object[]> GetNamesWithLessThan3Chars(int testQuantity) 
+        {
+            var fixture = new CategoryTestFixture();
+
+            for (int i = 0; i < testQuantity; i++)
+            {
+                var isOdd = i % 2 == 0;
+                yield return new object[] { fixture.GetValidCategoryName()[..(isOdd ? 1 : 2)] };
+            }
+
         }
 
     }
