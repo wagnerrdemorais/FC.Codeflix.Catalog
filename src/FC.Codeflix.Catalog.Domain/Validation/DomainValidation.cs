@@ -25,13 +25,13 @@ namespace FC.Codeflix.Catalog.Domain.Validation
         public static void MinLength(string target, int minLength, string fieldName)
         {
             if (target.Length < minLength)
-                throw new EntityValidationException($"{fieldName} should not be less than {minLength}");
+                throw new EntityValidationException($"{fieldName} should be at least {minLength} characters long");
         }
 
         public static void MaxLength(string target, int maxLength, string fieldName)
         {
             if (target.Length > maxLength)
-                throw new EntityValidationException($"{fieldName} should not be greater than {maxLength}");
+                throw new EntityValidationException($"{fieldName} should not be greater than {maxLength} characters long");
         }
     }
 }

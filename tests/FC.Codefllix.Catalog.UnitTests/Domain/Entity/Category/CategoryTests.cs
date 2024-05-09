@@ -109,7 +109,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
             Action action =
                 () => new DomainEntity.Category(invalidName, "Category description");
             var exception = Assert.Throws<EntityValidationException>(action);
-            Assert.Equal("Name size should be less or equal to 255 chars", exception.Message);
+            Assert.Equal("Name should not be greater than 255 characters long", exception.Message);
         }
 
         [Fact(DisplayName = "ExceptionWhenInstantiateWithDescriptionLongerThan10000Chars")]
@@ -120,7 +120,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
             Action action =
                 () => new DomainEntity.Category("Name", invalidDescription);
             var exception = Assert.Throws<EntityValidationException>(action);
-            Assert.Equal("Description size should be less or equal to 10_000 chars", exception.Message);
+            Assert.Equal("Description should not be greater than 10000 characters long", exception.Message);
         }
 
         [Fact(DisplayName = nameof(Activate))]
@@ -228,7 +228,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
             Action action = () => category.Update(invalidName);
 
             var exception = Assert.Throws<EntityValidationException>(action);
-            Assert.Equal("Name size should be less or equal to 255 chars", exception.Message);
+            Assert.Equal("Name should not be greater than 255 characters long", exception.Message);
         }
 
         [Fact(DisplayName = "ExceptionWhenUpdateWithDescriptionLongerThan10000Chars")]
@@ -245,7 +245,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
             Action action = () => category.Update("Name", invalidDescription);
 
             var exception = Assert.Throws<EntityValidationException>(action);
-            Assert.Equal("Description size should be less or equal to 10_000 chars", exception.Message);
+            Assert.Equal("Description should not be greater than 10000 characters long", exception.Message);
         }
 
         public static IEnumerable<object[]> GetNamesWithLessThan3Chars(int testQuantity) 
