@@ -13,19 +13,25 @@ namespace FC.Codeflix.Catalog.Domain.Validation
         public static void NotNull(object? target, string fieldName)
         {
             if (target == null) 
-                throw new EntityValidationExceprion($"{fieldName} should Not Be Null");
+                throw new EntityValidationException($"{fieldName} should Not Be Null");
         }
 
         public static void NotNullOrEmpty(string? target, string fieldName)
         {
             if(String.IsNullOrWhiteSpace(target))
-                throw new EntityValidationExceprion($"{fieldName} should not be null or empty");
+                throw new EntityValidationException($"{fieldName} should not be null or empty");
         }
 
         public static void MinLength(string target, int minLength, string fieldName)
         {
             if (target.Length < minLength)
-                throw new EntityValidationExceprion($"{fieldName} should not be less than {minLength}");
+                throw new EntityValidationException($"{fieldName} should not be less than {minLength}");
+        }
+
+        public static void MaxLength(string target, int maxLength, string fieldName)
+        {
+            if (target.Length > maxLength)
+                throw new EntityValidationException($"{fieldName} should not be greater than {maxLength}");
         }
     }
 }

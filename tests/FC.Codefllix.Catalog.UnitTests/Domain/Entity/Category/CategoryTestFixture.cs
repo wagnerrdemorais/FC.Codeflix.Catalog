@@ -1,10 +1,5 @@
 ﻿using FC.Codefllix.Catalog.UnitTests.Common;
 using FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 

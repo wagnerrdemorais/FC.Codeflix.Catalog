@@ -1,6 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Domain.Exceptions;
 using FluentAssertions;
-using System.Xml.Linq;
 using Xunit;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
@@ -74,7 +73,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
         {
             Action action = 
                 () => new DomainEntity.Category(name!, "Category description");
-            var exception = Assert.Throws<EntityValidationExceprion>(action);
+            var exception = Assert.Throws<EntityValidationException>(action);
             Assert.Equal("Name should not be null or empty", exception.Message);
         }
 
@@ -86,7 +85,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
                 () => new DomainEntity.Category("Category name", null);
 
             action.Should()
-                .Throw<EntityValidationExceprion>()
+                .Throw<EntityValidationException>()
                 .WithMessage("Description should not be null");
         }
 
@@ -98,7 +97,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
         {
             Action action =
                 () => new DomainEntity.Category(invalidName, "Category description");
-            var exception = Assert.Throws<EntityValidationExceprion>(action);
+            var exception = Assert.Throws<EntityValidationException>(action);
             Assert.Equal("Name should be at least 3 characters long", exception.Message);
         }
 
@@ -109,7 +108,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
             var invalidName = String.Join(null, Enumerable.Range(1, 256).Select(_ => "a").ToArray());
             Action action =
                 () => new DomainEntity.Category(invalidName, "Category description");
-            var exception = Assert.Throws<EntityValidationExceprion>(action);
+            var exception = Assert.Throws<EntityValidationException>(action);
             Assert.Equal("Name size should be less or equal to 255 chars", exception.Message);
         }
 
@@ -120,7 +119,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
             var invalidDescription = String.Join(null, Enumerable.Range(1, 10001).Select(_ => "a").ToArray());
             Action action =
                 () => new DomainEntity.Category("Name", invalidDescription);
-            var exception = Assert.Throws<EntityValidationExceprion>(action);
+            var exception = Assert.Throws<EntityValidationException>(action);
             Assert.Equal("Description size should be less or equal to 10_000 chars", exception.Message);
         }
 
@@ -199,7 +198,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
 
             Action action = () => category.Update(name!);
 
-            var exception = Assert.Throws<EntityValidationExceprion>(action);
+            var exception = Assert.Throws<EntityValidationException>(action);
             Assert.Equal("Name should not be null or empty", exception.Message);
         }
 
@@ -213,7 +212,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
 
             Action action = () => category.Update(invalidName!);
 
-            var exception = Assert.Throws<EntityValidationExceprion>(action);
+            var exception = Assert.Throws<EntityValidationException>(action);
             Assert.Equal("Name should be at least 3 characters long", exception.Message);
         }
 
@@ -228,7 +227,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
 
             Action action = () => category.Update(invalidName);
 
-            var exception = Assert.Throws<EntityValidationExceprion>(action);
+            var exception = Assert.Throws<EntityValidationException>(action);
             Assert.Equal("Name size should be less or equal to 255 chars", exception.Message);
         }
 
@@ -245,7 +244,7 @@ namespace FC.Codefllix.Catalog.UnitTests.Domain.Entity.Category
 
             Action action = () => category.Update("Name", invalidDescription);
 
-            var exception = Assert.Throws<EntityValidationExceprion>(action);
+            var exception = Assert.Throws<EntityValidationException>(action);
             Assert.Equal("Description size should be less or equal to 10_000 chars", exception.Message);
         }
 
